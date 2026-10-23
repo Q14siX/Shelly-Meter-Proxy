@@ -1,0 +1,265 @@
+{
+  "title": "Shelly Meter Proxy",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect Shelly Pro 3EM",
+        "description": "Enter the IP address of the original Shelly; the device identity and cloud data will be imported automatically.",
+        "data": {
+          "original_shelly_ip": "IP address of the original Shelly Pro 3EM",
+          "original_password": "Shelly device password (only if password protection is enabled)"
+        },
+        "data_description": {
+          "original_password": "The password is used only for the import and is not stored in the integration."
+        }
+      },
+      "mode": {
+        "title": "Measurement source",
+        "data": {
+          "mode": "Assignment"
+        }
+      },
+      "sources": {
+        "title": "Select Home Assistant sensors",
+        "data": {
+          "total_entity": "Total power (W/kW/MW)",
+          "phase_a_entity": "Power L1",
+          "phase_b_entity": "Power L2",
+          "phase_c_entity": "Power L3",
+          "total_mapping": "Total power assignment"
+        }
+      },
+      "handover": {
+        "title": "Switch off original Shelly and activate bridge",
+        "description": "The device identity {device} has been imported. **Now the original Shelly Pro 3EM must be powered off or completely disconnected from ALL network connections (Wi-Fi and Ethernet).** The original and the virtual Shelly must not use the same identity in the Shelly Cloud at the same time. After your confirmation, Home Assistant checks that the original IP no longer responds. Afterwards, the virtual Shelly cloud connection is enabled automatically. In the Shelly app it still appears as the same device, not as a second Shelly.",
+        "data": {
+          "original_offline_confirmed": "Original Shelly is powered off or fully disconnected from Wi-Fi, Ethernet and Shelly Cloud"
+        }
+      },
+      "cloud_certificate": {
+        "title": "Confirm cloud certificate once",
+        "description": "The Shelly cloud server **{server}** does not provide a certificate chain that Home Assistant can validate. The SHA-256 fingerprint was detected automatically: **`{fingerprint}`**. Verify this fingerprint over an independent connection before confirming it. After confirmation it will be stored permanently. If the certificate changes, the connection will be stopped for safety.",
+        "data": {
+          "certificate_confirmed": "I verified the fingerprint and trust this server certificate"
+        }
+      },
+      "isolation_choice": {
+        "title": "Safely disconnect original Shelly from the network",
+        "description": "Choose automatic isolation with a protected maintenance access point or power off the original device yourself. No changes are applied to the Shelly until you confirm.",
+        "data": {
+          "method": "Shutdown method"
+        }
+      },
+      "isolation_prepare": {
+        "title": "Configure Shelly access point",
+        "description": "Set a secure password for the access point. The password is used only during setup and is not stored in Home Assistant. Keep it in a safe place.",
+        "data": {
+          "ap_password": "Maintenance access point password (8 to 63 characters)"
+        }
+      },
+      "isolation_verify": {
+        "title": "Verify access point and isolate networks",
+        "description": "Connect a smartphone to **{ssid}** and check **http://{ap_ip}**. Then return to Home Assistant. Only after your confirmation will the original device's Wi-Fi client and Ethernet be disabled. **Its Shelly Cloud configuration remains unchanged**; the maintenance access point stays active.",
+        "data": {
+          "ap_reachable": "I successfully reached the protected access point; isolate the original Shelly now"
+        }
+      }
+    },
+    "error": {
+      "shelly_import_failed": "Shelly is not reachable or the device information could not be read.",
+      "invalid_input": "Please check the entered values.",
+      "invalid_ip": "Invalid local IPv4 address.",
+      "same_ip": "The original Shelly and Home Assistant cannot use the same IP address.",
+      "ha_ip_unavailable": "The local IP address of Home Assistant could not be determined automatically.",
+      "auth_required": "Shelly authentication required: please enter or verify the device password.",
+      "auth_unavailable": "The installed Home Assistant version does not support the required digest authentication client.",
+      "unsupported_device": "The device is not a compatible Shelly Pro 3EM Gen2.",
+      "cloud_key_missing": "The Shelly did not provide a usable cloud identification key.",
+      "cloud_disabled": "Please enable the Shelly Cloud on the original device first.",
+      "cloud_server_missing": "The Shelly did not provide a valid cloud server address.",
+      "shelly_timeout": "Timeout while calling the local Shelly API. Please check reachability from Home Assistant.",
+      "shelly_connection_failed": "Home Assistant cannot establish an HTTP connection to the Shelly API (port 80).",
+      "auth_denied": "Shelly denied API access. Please check password protection and access rights.",
+      "unexpected_redirect": "The Shelly API redirects to a different address. Please use the Shelly's direct IP address.",
+      "rpc_unavailable": "The Shelly RPC API was not found at this IP address (HTTP 404).",
+      "rpc_http_error": "The Shelly RPC API returned an HTTP error. Please check the Home Assistant log.",
+      "invalid_rpc_response": "The Shelly did not return a valid JSON-RPC response.",
+      "rpc_method_rejected": "The Shelly rejected a required RPC call.",
+      "device_info_incomplete": "The Shelly returned incomplete device information.",
+      "unexpected_import_error": "An unexpected error occurred during import. Please check the Home Assistant log.",
+      "handover_confirmation_required": "Please confirm first that the original Shelly is fully disconnected.",
+      "original_still_online": "The original Shelly is still responding at its IP address. Please disconnect it completely and try again.",
+      "certificate_confirmation_required": "The certificate must be explicitly confirmed before it can be adopted.",
+      "ap_auth": "The original Shelly password is incorrect.",
+      "ap_rpc_failed": "The original Shelly rejected a network configuration RPC call.",
+      "ap_network_failed": "The connection to the original Shelly was interrupted. Please check the network status.",
+      "ap_wrong_device": "The device identity does not match the imported Shelly.",
+      "ap_invalid_password": "The access point password must contain 8 to 63 characters.",
+      "ap_not_secure": "The Shelly did not confirm the protected access point.",
+      "ap_range_extender": "The range extender could not be disabled.",
+      "ap_test_required": "Please test the access point first and enable the confirmation.",
+      "ap_runtime_missing": "The running integration could not be found.",
+      "ap_maintenance_required": "Please confirm maintenance mode first."
+    },
+    "abort": {
+      "already_configured": "This Shelly Meter Proxy is already configured. Open the existing integration under Settings → Devices & Services → Shelly Meter Proxy → Configure to isolate the original Shelly automatically.",
+      "already_in_progress": "A setup for this Shelly is already in progress. Please use the existing dialog."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure Shelly Meter Proxy",
+        "menu_options": {
+          "cloud": "Cloud / TLS (advanced settings)",
+          "sources_mode": "Measurement sources",
+          "trust_certificate": "Check / approve cloud certificate automatically",
+          "original_isolation": "Isolate original Shelly automatically",
+          "finish_maintenance": "Finish maintenance mode after manual shutdown"
+        }
+      },
+      "sources": {
+        "title": "Select measurements",
+        "data": {
+          "total_entity": "Total power",
+          "phase_a_entity": "Power L1",
+          "phase_b_entity": "Power L2",
+          "phase_c_entity": "Power L3",
+          "invert_sign": "Invert sign",
+          "stale_seconds": "Maximum age (seconds)",
+          "total_mapping": "Total power assignment"
+        }
+      },
+      "handover": {
+        "title": "Confirm cloud handover",
+        "description": "Before the bridge becomes active in Shelly Cloud as {device}, the physical Shelly must be fully powered off or disconnected from all networks. Also check for any alternative internet connections.",
+        "data": {
+          "original_offline_confirmed": "Original Shelly fully powered off / disconnected"
+        }
+      },
+      "tls_warning": {
+        "title": "Confirm TLS exception explicitly",
+        "description": "In Shelly compatibility mode the WSS connection remains encrypted, but the authenticity of the server is **not verified**. An attacker on the network could redirect the connection and read the Shelly cloud key. Prefer a trusted certificate or an independently verified certificate fingerprint whenever possible. Continue only if you consciously accept this risk.",
+        "data": {
+          "tls_risk_accepted": "I accept the security risk and want to use compatibility mode."
+        }
+      },
+      "cloud": {
+        "title": "Shelly Cloud and TLS",
+        "description": "These settings are saved directly without selecting the measurement sources again. The original Shelly must remain fully disconnected from all networks for the cloud connection.",
+        "data": {
+          "cloud_enabled": "Enable Shelly Cloud",
+          "cloud_tls_mode": "TLS security for Shelly Cloud",
+          "cloud_tls_fingerprint": "SHA-256 fingerprint of the server certificate (fingerprint mode only)"
+        },
+        "data_description": {
+          "cloud_tls_fingerprint": "The fingerprint is visible as an unverified value in the Cloud server status sensor. Verify it independently before using it."
+        }
+      },
+      "sources_mode": {
+        "title": "Measurement source",
+        "data": {
+          "mode": "Measurement assignment"
+        }
+      },
+      "trust_certificate": {
+        "title": "Confirm cloud certificate",
+        "description": "**Server:** {server}. **Detected SHA-256 fingerprint:** `{fingerprint}`. Verify this fingerprint independently. After confirmation it will be stored as trusted permanently; you do not need to type it in.",
+        "data": {
+          "certificate_confirmed": "Fingerprint verified – approve certificate permanently"
+        }
+      },
+      "original_isolation": {
+        "title": "Start maintenance mode for original Shelly",
+        "description": "The virtual Shelly instance will be fully stopped. Only AFTER THAT may the original Shelly be powered on again. The virtual cloud connection remains blocked until the maintenance is finished.",
+        "data": {
+          "maintenance_confirmed": "Stop virtual Shelly now and start maintenance mode"
+        }
+      },
+      "original_isolation_prepare": {
+        "title": "Activate original Shelly and secure access point",
+        "description": "If it is still powered off: power on the original Shelly now and reach it at the previously known IP address. The virtual Shelly remains blocked. Set an access point password; it is not stored.",
+        "data": {
+          "ap_password": "Password for the Shelly access point (8 to 63 characters)",
+          "original_password": "Original Shelly device password (if enabled)"
+        }
+      },
+      "original_isolation_verify": {
+        "title": "Test maintenance access point",
+        "description": "Connect a smartphone to **{ssid}** and open **http://{ap_ip}**. After your confirmation, only the Wi-Fi client and Ethernet of the original device will be disabled. Its cloud configuration remains in place. Afterwards, the virtual instance can be enabled again.",
+        "data": {
+          "ap_reachable": "Access point tested – isolate original now and enable virtual cloud"
+        }
+      },
+      "finish_maintenance": {
+        "title": "Finish maintenance mode",
+        "description": "The original Shelly must be powered off or fully isolated from the cloud and network before the virtual device identity may go online again.",
+        "data": {
+          "offline_confirmed": "Original Shelly is fully isolated or powered off"
+        }
+      }
+    },
+    "error": {
+      "handover_confirmation_required": "Please confirm first that the original Shelly is fully disconnected.",
+      "original_still_online": "The original Shelly is still responding at its IP address. Please disconnect it completely and try again.",
+      "invalid_tls_fingerprint": "Please enter a valid SHA-256 fingerprint (64 hex characters).",
+      "tls_ack_required": "Please explicitly confirm the security risk.",
+      "certificate_confirmation_required": "Please verify the fingerprint and confirm the approval.",
+      "ap_auth": "The original Shelly password is incorrect.",
+      "ap_rpc_failed": "The original Shelly rejected a network configuration RPC call.",
+      "ap_network_failed": "The connection to the original Shelly was interrupted. Please check the network status.",
+      "ap_wrong_device": "The device identity does not match the imported Shelly.",
+      "ap_invalid_password": "The access point password must contain 8 to 63 characters.",
+      "ap_not_secure": "The Shelly did not confirm the protected access point.",
+      "ap_range_extender": "The range extender could not be disabled.",
+      "ap_test_required": "Please test the access point first and enable the confirmation.",
+      "ap_runtime_missing": "The running integration could not be found.",
+      "ap_maintenance_required": "Please confirm maintenance mode first."
+    },
+    "abort": {
+      "cloud_certificate_unreachable": "The server certificate could not be retrieved at the moment. Please check the network connection."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total": {
+        "name": "Grid power"
+      },
+      "phase_a": {
+        "name": "Power L1"
+      },
+      "phase_b": {
+        "name": "Power L2"
+      },
+      "phase_c": {
+        "name": "Power L3"
+      },
+      "available": {
+        "name": "Measurements valid"
+      },
+      "cloud": {
+        "name": "Cloud WebSocket"
+      },
+      "bridge": {
+        "name": "Virtual instance active"
+      },
+      "original": {
+        "name": "Original Shelly reachable"
+      },
+      "error": {
+        "name": "Source status"
+      },
+      "original_info": {
+        "name": "Original Shelly device information"
+      },
+      "cloud_server": {
+        "name": "Cloud server status"
+      }
+    },
+    "switch": {
+      "cloud_switch": {
+        "name": "Shelly Cloud"
+      }
+    }
+  }
+}
