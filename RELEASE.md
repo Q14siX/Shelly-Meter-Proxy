@@ -5,7 +5,7 @@
 </p>
 
 ## Version
-**20261023.233307**
+**20261024.101813**
 
 ---
 
@@ -13,6 +13,12 @@
 
 ### Erstveröffentlichung
 Dies ist die **Erstveröffentlichung** von **Shelly Meter Proxy**.
+
+### HACS-Kompatibilität
+- `hacs.json` im Repository-Hauptverzeichnis ergänzt.
+- `issue_tracker` in der Integrations-`manifest.json` hinterlegt.
+- README um die Installation als benutzerdefiniertes HACS-Repository ergänzt.
+- Die Integrationsdateien bleiben unter `custom_components/shelly_meter_proxy/`; das Branding bleibt ausschließlich im dortigen Unterordner `brand/`.
 
 ### Enthalten in dieser Version
 - Virtuelle **Shelly Pro 3EM**-Instanz für Home Assistant
@@ -51,6 +57,12 @@ Dies ist die **Erstveröffentlichung** von **Shelly Meter Proxy**.
 
 ### Initial release
 This is the **initial release** of **Shelly Meter Proxy**.
+
+### HACS compatibility
+- Added `hacs.json` at the repository root.
+- Added `issue_tracker` to the integration `manifest.json`.
+- Documented installation as a custom HACS repository in the README.
+- Integration files stay under `custom_components/shelly_meter_proxy/`; branding remains exclusively in its `brand/` subfolder.
 
 ### Included in this version
 - Virtual **Shelly Pro 3EM** instance for Home Assistant
