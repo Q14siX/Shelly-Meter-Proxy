@@ -1,7 +1,7 @@
 {
   "domain": "shelly_meter_proxy",
   "name": "Shelly Meter Proxy",
-  "version": "20261023.233307",
+  "version": "20261024.101813",
   "documentation": "https://shelly-api-docs.shelly.cloud/gen2/ComponentsAndServices/Shelly/",
   "requirements": [],
   "dependencies": [
@@ -10,5 +10,6 @@
   ],
   "config_flow": true,
   "iot_class": "local_push",
-  "codeowners": []
+  "codeowners": [],
+  "issue_tracker": "https://github.com/Q14siX/Shelly-Meter-Proxy/issues"
 }
