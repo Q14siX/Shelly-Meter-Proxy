@@ -74,6 +74,15 @@ Je nach Konfiguration stellt die Integration unter anderem folgende Entitäten b
 #### Per Update-/Paketfunktion
 Dieses ZIP ist als einzelnes Paket aufgebaut und kann sowohl für eine Neuinstallation als auch als Update-Paket verwendet werden.
 
+### Installation über HACS (benutzerdefiniertes Repository)
+1. In **HACS** das Menü **⋮ → Benutzerdefinierte Repositories** öffnen.
+2. `https://github.com/Q14siX/Shelly-Meter-Proxy` als Repository-Adresse eintragen.
+3. Als Kategorie **Integration** auswählen und hinzufügen.
+4. **Shelly Meter Proxy** in HACS herunterladen und Home Assistant neu starten.
+5. Anschließend unter **Einstellungen → Geräte & Dienste → Integration hinzufügen** die Integration einrichten.
+
+**Hinweis:** Das Repository wird als benutzerdefiniertes HACS-Repository hinzugefügt; dies bedeutet nicht, dass es bereits im offiziellen HACS-Katalog gelistet ist.
+
 ### Ersteinrichtung
 1. **Original-Shelly-IP** eingeben.
 2. Falls nötig **Shelly-Gerätepasswort** angeben.
@@ -169,6 +178,15 @@ Depending on the configuration, the integration provides entities such as:
 
 #### Via update/package function
 This ZIP is structured as a single package and can be used both as a fresh installation package and as an update package.
+
+### Installation via HACS (custom repository)
+1. In **HACS**, open **⋮ → Custom repositories**.
+2. Enter `https://github.com/Q14siX/Shelly-Meter-Proxy` as the repository URL.
+3. Select **Integration** as the category and add the repository.
+4. Download **Shelly Meter Proxy** through HACS and restart Home Assistant.
+5. Then open **Settings → Devices & Services → Add Integration** to configure it.
+
+**Note:** This is a custom HACS repository; it is not automatically listed in the official HACS catalog.
 
 ### Initial setup
 1. Enter the **original Shelly IP**.
